@@ -1,37 +1,29 @@
-# DSP-LAB-6
+# DSP-LAB-7
 
-#FREQUENCY ANALYSIS OF DFT
+#FIR   LOW PASS  FILTER  USING  RECTANGULAR  WINDOW
 
 PROGRAM:
 
  clc; 
-clear  all; 
-x=input ('Enter the sequence :');  
-n=length (x); 
-y=fft(x,n);  
-di sp('output  sequence is:');  
-disp(y); 
-m=abs(y); 
-disp('magnitude function is:');  
-disp(m); 
-p=angle(y); 
-disp('phase  function  is:’); 
-disp(p); 
-subplot(1,3,1);  
-t1=0 : n-1; 
-stem(t1,x);  
-xlabel('n-->'); 
-ylabel('amplitude -->');  
-title('input sequence'); 
-subplot(1,3,2); 
-t2=0 : n-1; 
-stem (t2,m);  
-xlabel('n-->'); 
-ylabel('amplitude -->'); 
-title('magnitude plot');  
-subplot(1,3,3); 
-t3=0 : n-1; 
-stem(t3,p);  
-xlabel('n-->'); 
-ylabel('phase -->');  
-title('phase  plot');
+clear all; 
+close all; 
+N=input('enter the order of filter'); 
+wc=(pi/2); 
+a=(N-1)/2; 
+for n=1:N 
+if((n-1)==a) 
+hd(n)=(wc/pi); 
+else 
+hd(n)=(sin(wc*(n-1-a)))/(pi*(n-1-a)); 
+end; 
+w(n)=1; 
+end; 
+h=w.*hd; 
+a=0:0.01:pi; 
+b=freqz(h,1,a); 
+mag=20*log(abs(b)); 
+plot(a/pi,mag); 
+grid; 
+xlabel('normalized frequency\omega^pi'); 
+ylabel('magnitude in db'); 
+title('low pass filter');
